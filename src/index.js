@@ -5,6 +5,9 @@ const themeRoutes = require('./routes/themeRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Enable trust proxy for Heroku
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
