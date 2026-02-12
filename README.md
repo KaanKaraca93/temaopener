@@ -125,6 +125,42 @@ POST http://localhost:3001/api/theme/update
 - `NODE_ENV`: `production` veya `test` (default: test)
 - `PORT`: Server portu (default: 3000)
 
+## Heroku Deployment
+
+### 1. Heroku'ya Bağla
+```bash
+# GitHub'dan Heroku'ya otomatik deploy
+# Heroku Dashboard > New > Create new app
+# Deploy tab > Deployment method > GitHub
+# Connect to: KaanKaraca93/temaopener
+```
+
+### 2. Environment Variables (Config Vars)
+Heroku Dashboard > Settings > Config Vars:
+```
+NODE_ENV=production
+```
+
+### 3. Deploy
+```bash
+# Automatic deploys from main branch
+# Enable Automatic Deploys
+```
+
+### 4. Test
+```bash
+# Heroku app URL
+https://your-app-name.herokuapp.com
+
+# API Endpoints
+POST https://your-app-name.herokuapp.com/api/theme/update
+```
+
+## GitHub Repository
+```
+https://github.com/KaanKaraca93/temaopener
+```
+
 ## Yapı
 
 ```
