@@ -1,0 +1,33 @@
+{
+  "name": "ipekyol-tema-api",
+  "version": "1.0.0",
+  "description": "Ipekyol Tema - PLM Integration API",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test:token": "node test/token.test.js",
+    "test:theme": "node test/plm-theme.test.js",
+    "test:idm": "node test/idm-theme.test.js",
+    "test:valuelist": "node test/idm-valuelist.test.js",
+    "test:update": "node test/plm-update.test.js"
+  },
+  "keywords": [
+    "plm",
+    "tema",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,46 @@
+### Health Check
+GET http://localhost:3000/
+Content-Type: application/json
+
+### Theme Service Health Check
+GET http://localhost:3000/api/theme/health
+Content-Type: application/json
+
+### Get Theme StyleColorways - ThemeId: 1174
+POST http://localhost:3000/api/theme
+Content-Type: application/json
+
+{
+  "ThemeId": 1174
+}
+
+### Get Theme StyleColorways - Invalid ThemeId (should fail)
+POST http://localhost:3000/api/theme
+Content-Type: application/json
+
+{
+  "ThemeId": "invalid"
+}
+
+### Get Theme StyleColorways - Missing ThemeId (should fail)
+POST http://localhost:3000/api/theme
+Content-Type: application/json
+
+{
+}
+
+### Get Theme with Attributes (Full Data)
+POST http://localhost:3001/api/theme/attributes
+Content-Type: application/json
+
+{
+  "ThemeId": 1174
+}
+
+### Update Theme StyleColorways (PATCH to PLM)
+POST http://localhost:3001/api/theme/update
+Content-Type: application/json
+
+{
+  "ThemeId": 1174
+}

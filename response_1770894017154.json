@@ -1,0 +1,2091 @@
+{
+  "entity": {
+    "name": "Theme_Attributes",
+    "desc": "Theme Attributes",
+    "root": "true",
+    "search": "false",
+    "resEnabled": "true",
+    "versionEnabled": "true",
+    "classification": "2",
+    "defaultAcl": "Public",
+    "reprItem": "ThemeId",
+    "signatureEnabled": "false",
+    "privateSpaceEnabled": "false",
+    "editable": "true",
+    "genAIEnabled": "false",
+    "attrs": {
+      "attr": [
+        {
+          "name": "Tema_Kodu",
+          "desc": "Tema Kodu",
+          "type": "1",
+          "qual": "Tema_Kodu",
+          "default": "0",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false"
+        },
+        {
+          "name": "MDS_ID",
+          "desc": "MDS_ID",
+          "type": "21",
+          "qual": "MDS_ID",
+          "required": "false",
+          "unique": "true",
+          "searchable": "false",
+          "repr": "false"
+        },
+        {
+          "name": "ThemeId",
+          "desc": "ThemeId",
+          "type": "3",
+          "qual": "ThemeId",
+          "default": "0",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "true"
+        },
+        {
+          "name": "InStore_Tarihi",
+          "desc": "InStore Tarihi",
+          "type": "7",
+          "qual": "InStore_Tarihi",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false"
+        },
+        {
+          "name": "Ana_Tema",
+          "desc": "Ana Tema",
+          "type": "1",
+          "qual": "Ana_Tema",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false",
+          "vsEntity": "Ana_Tema_Kodu",
+          "vsAttr": "value",
+          "valueset": {
+            "value": [
+              {
+                "name": "001",
+                "desc": "TEMA 1"
+              },
+              {
+                "name": "002",
+                "desc": "TEMA 2"
+              },
+              {
+                "name": "003",
+                "desc": "TEMA 3"
+              },
+              {
+                "name": "004",
+                "desc": "TEMA 4"
+              },
+              {
+                "name": "005",
+                "desc": "TEMA 5"
+              },
+              {
+                "name": "006",
+                "desc": "TEMA 6"
+              },
+              {
+                "name": "007",
+                "desc": "TEMA 7"
+              },
+              {
+                "name": "008",
+                "desc": "TEMA 8"
+              },
+              {
+                "name": "009",
+                "desc": "TEMA 9"
+              },
+              {
+                "name": "010",
+                "desc": "TEMA 10"
+              },
+              {
+                "name": "011",
+                "desc": "TEMA 11"
+              },
+              {
+                "name": "012",
+                "desc": "TEMA 12"
+              },
+              {
+                "name": "013",
+                "desc": "TEMA 13"
+              },
+              {
+                "name": "014",
+                "desc": "TEMA 14"
+              },
+              {
+                "name": "015",
+                "desc": "TEMA 15"
+              },
+              {
+                "name": "016",
+                "desc": "TEMA 16"
+              },
+              {
+                "name": "017",
+                "desc": "TEMA 17"
+              },
+              {
+                "name": "018",
+                "desc": "TEMA 18"
+              },
+              {
+                "name": "019",
+                "desc": "BRIDGE"
+              },
+              {
+                "name": "020",
+                "desc": "DEVELOPMENT"
+              },
+              {
+                "name": "021",
+                "desc": "DIGER"
+              },
+              {
+                "name": "022",
+                "desc": "SCT 1"
+              },
+              {
+                "name": "023",
+                "desc": "SCT 2"
+              },
+              {
+                "name": "024",
+                "desc": "SCT 3"
+              },
+              {
+                "name": "025",
+                "desc": "SCT 4"
+              },
+              {
+                "name": "026",
+                "desc": "SCT 5"
+              },
+              {
+                "name": "027",
+                "desc": "BCT 1"
+              },
+              {
+                "name": "028",
+                "desc": "SCT 6"
+              },
+              {
+                "name": "029",
+                "desc": "MONO 1"
+              },
+              {
+                "name": "030",
+                "desc": "JEAN P1"
+              },
+              {
+                "name": "031",
+                "desc": "MONO 2"
+              },
+              {
+                "name": "032",
+                "desc": "MONO 3"
+              },
+              {
+                "name": "033",
+                "desc": "MONO DENIM"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Cluster",
+          "desc": "Cluster",
+          "type": "1",
+          "qual": "Cluster",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false",
+          "vsEntity": "Cluster",
+          "vsAttr": "value",
+          "valueset": {
+            "value": [
+              {
+                "name": "013",
+                "desc": "Koleksiyon - B"
+              },
+              {
+                "name": "015",
+                "desc": "IPEKYOL CO"
+              },
+              {
+                "name": "016",
+                "desc": "Miss Ipekyol"
+              },
+              {
+                "name": "017",
+                "desc": "Rusya"
+              },
+              {
+                "name": "018",
+                "desc": "Ortadoğu"
+              },
+              {
+                "name": "008",
+                "desc": "Diğer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Urun_Sinifi",
+          "desc": "Urun Sinifi",
+          "type": "1",
+          "qual": "Urun_Sinifi",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false",
+          "vsEntity": "Urun_Sinifi",
+          "vsAttr": "value",
+          "valueset": {
+            "value": [
+              {
+                "name": "008",
+                "desc": "Diğer"
+              },
+              {
+                "name": "001",
+                "desc": "NORMAL"
+              }
+            ]
+          }
+        },
+        {
+          "name": "LifeStyle",
+          "desc": "LifeStyle",
+          "type": "1",
+          "qual": "LifeStyle",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false",
+          "vsEntity": "LifeStyle",
+          "vsAttr": "value",
+          "valueset": {
+            "value": [
+              {
+                "name": "001",
+                "desc": "ELEGANT"
+              },
+              {
+                "name": "002",
+                "desc": "BUSINESS"
+              },
+              {
+                "name": "003",
+                "desc": "SMART"
+              },
+              {
+                "name": "007",
+                "desc": "MONO"
+              },
+              {
+                "name": "008",
+                "desc": "AKSESUAR"
+              },
+              {
+                "name": "009",
+                "desc": "DIGER"
+              },
+              {
+                "name": "011",
+                "desc": "AYAKKABI"
+              },
+              {
+                "name": "012",
+                "desc": "CHIC"
+              },
+              {
+                "name": "013",
+                "desc": "KOZMETIK"
+              },
+              {
+                "name": "014",
+                "desc": "HOME"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Alt_Sezon",
+          "desc": "Alt Sezon",
+          "type": "1",
+          "qual": "Alt_Sezon",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false",
+          "vsEntity": "Tema_Alt_Sezon",
+          "vsAttr": "value",
+          "valueset": {
+            "value": [
+              {
+                "name": "Diğer",
+                "desc": "Diğer"
+              },
+              {
+                "name": "FW1",
+                "desc": "FW1"
+              },
+              {
+                "name": "FW2",
+                "desc": "FW2"
+              },
+              {
+                "name": "FW4",
+                "desc": "FW4"
+              },
+              {
+                "name": "SS1",
+                "desc": "SS1"
+              },
+              {
+                "name": "SS2",
+                "desc": "SS2"
+              },
+              {
+                "name": "SS3",
+                "desc": "SS3"
+              },
+              {
+                "name": "SS4",
+                "desc": "SS4"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Hibrit",
+          "desc": "Hibrit",
+          "type": "1",
+          "qual": "Hibrit",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false",
+          "vsEntity": "Hibrit_Model",
+          "vsAttr": "value",
+          "valueset": {
+            "value": [
+              {
+                "name": "001",
+                "desc": "BRIDGE"
+              },
+              {
+                "name": "002",
+                "desc": "PLAN"
+              },
+              {
+                "name": "003",
+                "desc": "SEMI PLAN"
+              },
+              {
+                "name": "004",
+                "desc": "FAST FASHION"
+              },
+              {
+                "name": "005",
+                "desc": "RAMAZAN"
+              },
+              {
+                "name": "006",
+                "desc": "ORTA DOGU"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Marka",
+          "desc": "Marka",
+          "type": "1",
+          "qual": "Marka",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false",
+          "vsEntity": "Marka",
+          "vsAttr": "value",
+          "valueset": {
+            "value": [
+              {
+                "name": "005",
+                "desc": "DIGER"
+              },
+              {
+                "name": "001",
+                "desc": "Ipekyol"
+              },
+              {
+                "name": "003",
+                "desc": "Machka"
+              },
+              {
+                "name": "004",
+                "desc": "Miss Ipekyol"
+              },
+              {
+                "name": "002",
+                "desc": "Twist"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Tema_Kisa_Kod",
+          "desc": "Tema Kisa Kod",
+          "type": "1",
+          "qual": "Tema_Kisa_Kod",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false",
+          "vsEntity": "Tema_Kisa_Kodu",
+          "vsAttr": "value",
+          "valueset": {
+            "value": [
+              {
+                "name": "166",
+                "desc": "CAKP1-B"
+              },
+              {
+                "name": "22",
+                "desc": "ECU1"
+              },
+              {
+                "name": "23",
+                "desc": "ECU2"
+              },
+              {
+                "name": "229",
+                "desc": "B-SCT11"
+              },
+              {
+                "name": "244",
+                "desc": "DEFOLU"
+              },
+              {
+                "name": "248",
+                "desc": "FF-B"
+              },
+              {
+                "name": "281",
+                "desc": "AYKSP1-B"
+              },
+              {
+                "name": "397",
+                "desc": "O-TEMA1"
+              },
+              {
+                "name": "398",
+                "desc": "O-TEMA2"
+              },
+              {
+                "name": "404",
+                "desc": "AYKSP2-B"
+              },
+              {
+                "name": "405",
+                "desc": "AYKSP3-B"
+              },
+              {
+                "name": "425",
+                "desc": "B-MONO 1"
+              },
+              {
+                "name": "432",
+                "desc": "B-MONO 2"
+              },
+              {
+                "name": "433",
+                "desc": "B-MONO 3"
+              },
+              {
+                "name": "449",
+                "desc": "B-MONO 4"
+              },
+              {
+                "name": "451",
+                "desc": "B-MONO 5"
+              },
+              {
+                "name": "452",
+                "desc": "B-MONO 6"
+              },
+              {
+                "name": "463",
+                "desc": "B-SCT1"
+              },
+              {
+                "name": "464",
+                "desc": "B-SCT2"
+              },
+              {
+                "name": "465",
+                "desc": "B-BCT1"
+              },
+              {
+                "name": "467",
+                "desc": "B-DENIM P1"
+              },
+              {
+                "name": "468",
+                "desc": "B-DENIM P2"
+              },
+              {
+                "name": "473",
+                "desc": "B-SCT3"
+              },
+              {
+                "name": "476",
+                "desc": "B-BCT2"
+              },
+              {
+                "name": "479",
+                "desc": "B-BCT3"
+              },
+              {
+                "name": "483",
+                "desc": "B-DENIM SP1"
+              },
+              {
+                "name": "488",
+                "desc": "B-SCT4"
+              },
+              {
+                "name": "489",
+                "desc": "B-SCT5"
+              },
+              {
+                "name": "511",
+                "desc": "B-JEAN P1"
+              },
+              {
+                "name": "515",
+                "desc": "MCK-ORT"
+              },
+              {
+                "name": "533",
+                "desc": "FF TEMA1"
+              },
+              {
+                "name": "534",
+                "desc": "FF TEMA2"
+              },
+              {
+                "name": "537",
+                "desc": "FF TEMA5"
+              },
+              {
+                "name": "547",
+                "desc": "B-JEAN SP1"
+              },
+              {
+                "name": "552",
+                "desc": "B-SCT7"
+              },
+              {
+                "name": "553",
+                "desc": "B-SCT9"
+              },
+              {
+                "name": "554",
+                "desc": "TKL1"
+              },
+              {
+                "name": "555",
+                "desc": "MODEL"
+              },
+              {
+                "name": "584",
+                "desc": "CAK-UCYAZ"
+              },
+              {
+                "name": "586",
+                "desc": "B-SCT8"
+              },
+              {
+                "name": "587",
+                "desc": "B-SCT10"
+              },
+              {
+                "name": "588",
+                "desc": "B-SCT12"
+              },
+              {
+                "name": "594",
+                "desc": "B-SCT6"
+              },
+              {
+                "name": "640",
+                "desc": "TM-1"
+              },
+              {
+                "name": "641",
+                "desc": "TM-2"
+              },
+              {
+                "name": "642",
+                "desc": "TM-3"
+              },
+              {
+                "name": "643",
+                "desc": "TM-4"
+              },
+              {
+                "name": "644",
+                "desc": "TM-5"
+              },
+              {
+                "name": "645",
+                "desc": "TM-6"
+              },
+              {
+                "name": "646",
+                "desc": "TM-7"
+              },
+              {
+                "name": "647",
+                "desc": "TM-8"
+              },
+              {
+                "name": "648",
+                "desc": "TM-9"
+              },
+              {
+                "name": "649",
+                "desc": "TM-10"
+              },
+              {
+                "name": "650",
+                "desc": "TM-11"
+              },
+              {
+                "name": "651",
+                "desc": "TM-12"
+              },
+              {
+                "name": "652",
+                "desc": "TM-13"
+              },
+              {
+                "name": "653",
+                "desc": "TM-14"
+              },
+              {
+                "name": "654",
+                "desc": "TM-15"
+              },
+              {
+                "name": "655",
+                "desc": "TM-16"
+              },
+              {
+                "name": "656",
+                "desc": "TM-17"
+              },
+              {
+                "name": "683",
+                "desc": "B-SCT13"
+              },
+              {
+                "name": "709",
+                "desc": "TM-18"
+              },
+              {
+                "name": "722",
+                "desc": "B-SCT14"
+              },
+              {
+                "name": "777",
+                "desc": "FF-B-MONO"
+              },
+              {
+                "name": "812",
+                "desc": "FF-BASIC"
+              },
+              {
+                "name": "821",
+                "desc": "TKL"
+              },
+              {
+                "name": "887",
+                "desc": "CELEBRITY"
+              },
+              {
+                "name": "951",
+                "desc": "AYK-B-SCT2"
+              },
+              {
+                "name": "952",
+                "desc": "AYK-B-SCT4"
+              },
+              {
+                "name": "953",
+                "desc": "AYK-B-SCT5"
+              },
+              {
+                "name": "955",
+                "desc": "AYK-B-BCT2"
+              },
+              {
+                "name": "956",
+                "desc": "AYK-B-BCT1"
+              },
+              {
+                "name": "957",
+                "desc": "AYK-B-SCT3"
+              },
+              {
+                "name": "958",
+                "desc": "AYK-B-SCT1"
+              },
+              {
+                "name": "959",
+                "desc": "CAK-B-SCT4"
+              },
+              {
+                "name": "960",
+                "desc": "CAK-B-SCT2"
+              },
+              {
+                "name": "961",
+                "desc": "CAK-B-SCT5"
+              },
+              {
+                "name": "962",
+                "desc": "CAK-B-SCT1"
+              },
+              {
+                "name": "963",
+                "desc": "CAK-B-SCT3"
+              },
+              {
+                "name": "964",
+                "desc": "CAK-B-BCT1"
+              },
+              {
+                "name": "966",
+                "desc": "CAK-B-BCT2"
+              },
+              {
+                "name": "997",
+                "desc": "TM-19"
+              },
+              {
+                "name": "999",
+                "desc": "MONO-SCT2"
+              },
+              {
+                "name": "1000",
+                "desc": "MONO-SCT3"
+              },
+              {
+                "name": "1001",
+                "desc": "MONO-SCT4"
+              },
+              {
+                "name": "1002",
+                "desc": "MONO-SCT5"
+              },
+              {
+                "name": "1003",
+                "desc": "MONO-SCT6"
+              },
+              {
+                "name": "1004",
+                "desc": "MONO-DENIM"
+              },
+              {
+                "name": "1005",
+                "desc": "MONO-BBCT1"
+              },
+              {
+                "name": "1006",
+                "desc": "MONO-BBCT2"
+              },
+              {
+                "name": "1007",
+                "desc": "MONO-SCT7"
+              },
+              {
+                "name": "1008",
+                "desc": "CARRYOVER"
+              },
+              {
+                "name": "1009",
+                "desc": "B-SCT15"
+              },
+              {
+                "name": "1010",
+                "desc": "B-SCT16"
+              },
+              {
+                "name": "1011",
+                "desc": "B-SCT17"
+              },
+              {
+                "name": "1012",
+                "desc": "B-SCT18"
+              },
+              {
+                "name": "1013",
+                "desc": "B-SCT19"
+              },
+              {
+                "name": "1014",
+                "desc": "B-SCT20"
+              },
+              {
+                "name": "1016",
+                "desc": "AYK-B-SCT6"
+              },
+              {
+                "name": "1017",
+                "desc": "AYK-B-SCT7"
+              },
+              {
+                "name": "1019",
+                "desc": "CAK-B-SCT8"
+              },
+              {
+                "name": "1021",
+                "desc": "CAK-B-SCT7"
+              },
+              {
+                "name": "1022",
+                "desc": "CAK-B-SCT6"
+              },
+              {
+                "name": "1025",
+                "desc": "ORT-MONO"
+              },
+              {
+                "name": "1034",
+                "desc": "RAMADAN-1"
+              },
+              {
+                "name": "1134",
+                "desc": "AYK-B-SCT9"
+              },
+              {
+                "name": "1136",
+                "desc": "AYK-B-SCT12"
+              },
+              {
+                "name": "1139",
+                "desc": "AYK-B-SCT13"
+              },
+              {
+                "name": "1141",
+                "desc": "AYK-B-SCT10"
+              },
+              {
+                "name": "1142",
+                "desc": "AYK-B-SCT11"
+              },
+              {
+                "name": "1143",
+                "desc": "AYK-B-SCT8"
+              },
+              {
+                "name": "1148",
+                "desc": "INSERT-BSCT-8"
+              },
+              {
+                "name": "1149",
+                "desc": "INSERT-BSCT-9"
+              },
+              {
+                "name": "1150",
+                "desc": "INSERT-BSCT-10"
+              },
+              {
+                "name": "1151",
+                "desc": "INSERT-BSCT-11"
+              },
+              {
+                "name": "1152",
+                "desc": "INSERT-BSCT-12"
+              },
+              {
+                "name": "1153",
+                "desc": "INSERT-BSCT-13"
+              },
+              {
+                "name": "1154",
+                "desc": "INSERT-BSCT-14"
+              },
+              {
+                "name": "1155",
+                "desc": "INSERT-BSCT-15"
+              },
+              {
+                "name": "1156",
+                "desc": "INSERT-BBCT-3"
+              },
+              {
+                "name": "1157",
+                "desc": "RAMADAN-3"
+              },
+              {
+                "name": "1158",
+                "desc": "RAMADAN-2"
+              },
+              {
+                "name": "1159",
+                "desc": "MCK-ECU"
+              },
+              {
+                "name": "1161",
+                "desc": "MONO-SCT8"
+              },
+              {
+                "name": "1162",
+                "desc": "MONO-SCT10"
+              },
+              {
+                "name": "1163",
+                "desc": "MONO-SCT11"
+              },
+              {
+                "name": "1164",
+                "desc": "MONO-SCT12"
+              },
+              {
+                "name": "1165",
+                "desc": "MONO-SCT14"
+              },
+              {
+                "name": "1166",
+                "desc": "MONO-SCT16"
+              },
+              {
+                "name": "1172",
+                "desc": "CAK-B-SCT15"
+              },
+              {
+                "name": "1173",
+                "desc": "CAK-B-SCT16"
+              },
+              {
+                "name": "1174",
+                "desc": "CAK-B-SCT17"
+              },
+              {
+                "name": "1175",
+                "desc": "CAK-B-SCT19"
+              },
+              {
+                "name": "1188",
+                "desc": "INSERT-BSCT-1"
+              },
+              {
+                "name": "1189",
+                "desc": "INSERT-BSCT-2"
+              },
+              {
+                "name": "1190",
+                "desc": "INSERT-BSCT-4"
+              },
+              {
+                "name": "1191",
+                "desc": "INSERT-BSCT-5"
+              },
+              {
+                "name": "1192",
+                "desc": "INSERT-BSCT-6"
+              },
+              {
+                "name": "1195",
+                "desc": "INSERT-BSCT-3"
+              },
+              {
+                "name": "1196",
+                "desc": "INSERT-BSCT-7"
+              },
+              {
+                "name": "1199",
+                "desc": "FF TEMA6"
+              },
+              {
+                "name": "1200",
+                "desc": "FF TEMA7"
+              },
+              {
+                "name": "1205",
+                "desc": "MONO-SCT9"
+              },
+              {
+                "name": "1207",
+                "desc": "MONO-BCT3"
+              },
+              {
+                "name": "1210",
+                "desc": "MONO-SCT13"
+              },
+              {
+                "name": "1211",
+                "desc": "AYK-B-SCT14"
+              },
+              {
+                "name": "1212",
+                "desc": "AYK-B-SCT15"
+              },
+              {
+                "name": "1206",
+                "desc": "MONO-SCT15"
+              },
+              {
+                "name": "1213",
+                "desc": "AYK B-BCT3"
+              },
+              {
+                "name": "1224",
+                "desc": "CAK B-BCT3"
+              },
+              {
+                "name": "1241",
+                "desc": "MCK-RAMADAN-1"
+              },
+              {
+                "name": "1242",
+                "desc": "MCK-RAMADAN-2"
+              },
+              {
+                "name": "1243",
+                "desc": "MCK-RAMADAN-3"
+              },
+              {
+                "name": "1246",
+                "desc": "MCK-RAMADAN-4"
+              },
+              {
+                "name": "1247",
+                "desc": "MCK-RAMADAN-5"
+              },
+              {
+                "name": "1248",
+                "desc": "MCK-RAMADAN-6"
+              },
+              {
+                "name": "1249",
+                "desc": "MCK-RAMADAN-7"
+              },
+              {
+                "name": "1251",
+                "desc": "RAMADAN-4"
+              },
+              {
+                "name": "1255",
+                "desc": "ITU"
+              },
+              {
+                "name": "1256",
+                "desc": "MONO-SCT1"
+              },
+              {
+                "name": "1259",
+                "desc": "O-TEMA3"
+              },
+              {
+                "name": "1260",
+                "desc": "O-TEMA4"
+              },
+              {
+                "name": "1261",
+                "desc": "O-TEMA5"
+              },
+              {
+                "name": "1262",
+                "desc": "O-TEMA6"
+              },
+              {
+                "name": "1263",
+                "desc": "O-TEMA7"
+              },
+              {
+                "name": "1265",
+                "desc": "AYK-B-SCT16"
+              },
+              {
+                "name": "1266",
+                "desc": "AYK-B-SCT17"
+              },
+              {
+                "name": "1267",
+                "desc": "AYK-B-SCT18"
+              },
+              {
+                "name": "1268",
+                "desc": "AYK-B-SCT19"
+              },
+              {
+                "name": "1269",
+                "desc": "AYK-B-SCT20"
+              },
+              {
+                "name": "1270",
+                "desc": "CAK-B-SCT9"
+              },
+              {
+                "name": "1271",
+                "desc": "CAK-B-SCT10"
+              },
+              {
+                "name": "1272",
+                "desc": "CAK-B-SCT11"
+              },
+              {
+                "name": "1273",
+                "desc": "CAK-B-SCT12"
+              },
+              {
+                "name": "1274",
+                "desc": "CAK-B-SCT13"
+              },
+              {
+                "name": "1275",
+                "desc": "CAK-B-SCT14"
+              },
+              {
+                "name": "1276",
+                "desc": "CAK-B-SCT18"
+              },
+              {
+                "name": "1277",
+                "desc": "CAK-B-SCT20"
+              },
+              {
+                "name": "1280",
+                "desc": "MONO-SCT17"
+              },
+              {
+                "name": "1302",
+                "desc": "TWS-TEMA 1"
+              },
+              {
+                "name": "1303",
+                "desc": "TWS-TEMA 2"
+              },
+              {
+                "name": "1304",
+                "desc": "TWS-TEMA 3"
+              },
+              {
+                "name": "1305",
+                "desc": "TWS-TEMA 4"
+              },
+              {
+                "name": "1306",
+                "desc": "TWS-TEMA 5"
+              },
+              {
+                "name": "1307",
+                "desc": "TWS-TEMA 6"
+              },
+              {
+                "name": "1308",
+                "desc": "TWS-TEMA 7"
+              },
+              {
+                "name": "1309",
+                "desc": "TWS-TEMA 8"
+              },
+              {
+                "name": "1310",
+                "desc": "TWS-TEMA 9"
+              },
+              {
+                "name": "1311",
+                "desc": "TWS-TEMA 10"
+              },
+              {
+                "name": "1312",
+                "desc": "TWS-TEMA 11"
+              },
+              {
+                "name": "1313",
+                "desc": "TWS-TEMA 12"
+              },
+              {
+                "name": "1314",
+                "desc": "TWS-TEMA 13"
+              },
+              {
+                "name": "1315",
+                "desc": "CAK-TWS-TEMA 1"
+              },
+              {
+                "name": "1316",
+                "desc": "CAK-TWS-TEMA 2"
+              },
+              {
+                "name": "1317",
+                "desc": "CAK-TWS-TEMA 3"
+              },
+              {
+                "name": "1318",
+                "desc": "CAK-TWS-TEMA 4"
+              },
+              {
+                "name": "1319",
+                "desc": "CAK-TWS-TEMA 5"
+              },
+              {
+                "name": "1320",
+                "desc": "CAK-TWS-TEMA 6"
+              },
+              {
+                "name": "1321",
+                "desc": "CAK-TWS-TEMA 7"
+              },
+              {
+                "name": "1322",
+                "desc": "CAK-TWS-TEMA 8"
+              },
+              {
+                "name": "1323",
+                "desc": "CAK-TWS-TEMA 9"
+              },
+              {
+                "name": "1324",
+                "desc": "CAK-TWS-TEMA 10"
+              },
+              {
+                "name": "1325",
+                "desc": "CAK-TWS-TEMA 11"
+              },
+              {
+                "name": "1326",
+                "desc": "CAK-TWS-TEMA 12"
+              },
+              {
+                "name": "1327",
+                "desc": "CAK-TWS-TEMA 13"
+              },
+              {
+                "name": "1328",
+                "desc": "AYK-TWS-TEMA 1"
+              },
+              {
+                "name": "1329",
+                "desc": "AYK-TWS-TEMA 2"
+              },
+              {
+                "name": "1331",
+                "desc": "AYK-TWS-TEMA 4"
+              },
+              {
+                "name": "1332",
+                "desc": "AYK-TWS-TEMA 5"
+              },
+              {
+                "name": "1333",
+                "desc": "AYK-TWS-TEMA 6"
+              },
+              {
+                "name": "1334",
+                "desc": "AYK-TWS-TEMA 7"
+              },
+              {
+                "name": "1335",
+                "desc": "AYK-TWS-TEMA 8"
+              },
+              {
+                "name": "1336",
+                "desc": "AYK-TWS-TEMA 9"
+              },
+              {
+                "name": "1337",
+                "desc": "AYK-TWS-TEMA 10"
+              },
+              {
+                "name": "1338",
+                "desc": "AYK-TWS-TEMA 11"
+              },
+              {
+                "name": "1339",
+                "desc": "AYK-TWS-TEMA 12"
+              },
+              {
+                "name": "1340",
+                "desc": "AYK-TWS-TEMA 13"
+              },
+              {
+                "name": "1342",
+                "desc": "TWS-TEMA 14"
+              },
+              {
+                "name": "1343",
+                "desc": "TWS-TEMA 15"
+              },
+              {
+                "name": "1344",
+                "desc": "TWS-TEMA 16"
+              },
+              {
+                "name": "1345",
+                "desc": "TWS-TEMA 17"
+              },
+              {
+                "name": "1346",
+                "desc": "TWS-TEMA 18"
+              },
+              {
+                "name": "1347",
+                "desc": "TWS-TEMA 19"
+              },
+              {
+                "name": "1351",
+                "desc": "AYK-TWS-TEMA 14"
+              },
+              {
+                "name": "1352",
+                "desc": "AYK-TWS-TEMA 15"
+              },
+              {
+                "name": "1353",
+                "desc": "AYK-TWS-TEMA 16"
+              },
+              {
+                "name": "1354",
+                "desc": "AYK-TWS-TEMA 17"
+              },
+              {
+                "name": "1355",
+                "desc": "AYK-TWS-TEMA 18"
+              },
+              {
+                "name": "1356",
+                "desc": "AYK-TWS-TEMA 19"
+              },
+              {
+                "name": "1360",
+                "desc": "CAK-TWS-TEMA 14"
+              },
+              {
+                "name": "1361",
+                "desc": "CAK-TWS-TEMA 15"
+              },
+              {
+                "name": "1362",
+                "desc": "CAK-TWS-TEMA 16"
+              },
+              {
+                "name": "1363",
+                "desc": "CAK-TWS-TEMA 17"
+              },
+              {
+                "name": "1364",
+                "desc": "CAK-TWS-TEMA 18"
+              },
+              {
+                "name": "1365",
+                "desc": "CAK-TWS-TEMA 19"
+              },
+              {
+                "name": "1369",
+                "desc": "INSERT-TEMA-6"
+              },
+              {
+                "name": "1370",
+                "desc": "INSERT-TEMA-8"
+              },
+              {
+                "name": "1371",
+                "desc": "INSERT-TEMA-9"
+              },
+              {
+                "name": "1372",
+                "desc": "INSERT-TEMA-12"
+              },
+              {
+                "name": "1373",
+                "desc": "INSERT-TEMA-5"
+              },
+              {
+                "name": "1374",
+                "desc": "INSERT-TEMA-7"
+              },
+              {
+                "name": "1375",
+                "desc": "INSERT-TEMA-13"
+              },
+              {
+                "name": "1376",
+                "desc": "INSERT-TEMA-10"
+              },
+              {
+                "name": "1377",
+                "desc": "INSERT-TEMA-1"
+              },
+              {
+                "name": "1378",
+                "desc": "INSERT-TEMA-2"
+              },
+              {
+                "name": "1379",
+                "desc": "INSERT-TEMA-11"
+              },
+              {
+                "name": "1385",
+                "desc": "INSERT-TEMA-14"
+              },
+              {
+                "name": "1386",
+                "desc": "INSERT-TEMA-15"
+              },
+              {
+                "name": "1387",
+                "desc": "INSERT-TEMA-16"
+              },
+              {
+                "name": "1388",
+                "desc": "INSERT-TEMA-17"
+              },
+              {
+                "name": "1389",
+                "desc": "INSERT-TEMA-18"
+              },
+              {
+                "name": "1390",
+                "desc": "INSERT-TEMA-19"
+              },
+              {
+                "name": "1397",
+                "desc": "ORT-BRDG-1"
+              },
+              {
+                "name": "1398",
+                "desc": "ORT-BRDG-2"
+              },
+              {
+                "name": "1400",
+                "desc": "O-TEMA-MONO1"
+              },
+              {
+                "name": "1401",
+                "desc": "O-TEMA-MONO2"
+              },
+              {
+                "name": "1402",
+                "desc": "O-TEMA-MONO3"
+              },
+              {
+                "name": "1408",
+                "desc": "CAK-MONO"
+              },
+              {
+                "name": "1409",
+                "desc": "AYK-MONO"
+              },
+              {
+                "name": "1422",
+                "desc": "INSERT-TEMA-3"
+              },
+              {
+                "name": "1423",
+                "desc": "INSERT-TEMA-4"
+              },
+              {
+                "name": "1429",
+                "desc": "CAK-MONO-SP"
+              },
+              {
+                "name": "1434",
+                "desc": "CAK-MONO-1"
+              },
+              {
+                "name": "1445",
+                "desc": "FF-B-MONO1"
+              },
+              {
+                "name": "1448",
+                "desc": "INSERT-BSCT-16"
+              },
+              {
+                "name": "1453",
+                "desc": "ACTIVEWEAR"
+              },
+              {
+                "name": "1457",
+                "desc": "IPK-CO-1"
+              },
+              {
+                "name": "1458",
+                "desc": "IPK-CO-2"
+              },
+              {
+                "name": "1459",
+                "desc": "IPK-CO-3"
+              },
+              {
+                "name": "1460",
+                "desc": "IPK-CO-4"
+              },
+              {
+                "name": "1461",
+                "desc": "IPK-CO-5"
+              },
+              {
+                "name": "1463",
+                "desc": "IPK-CO-6"
+              },
+              {
+                "name": "1464",
+                "desc": "IPK-CO-7"
+              },
+              {
+                "name": "1465",
+                "desc": "IPK-CO-8"
+              },
+              {
+                "name": "1470",
+                "desc": "FF-TK"
+              },
+              {
+                "name": "1471",
+                "desc": "INSERT- TEMA1"
+              },
+              {
+                "name": "1472",
+                "desc": "INSERT- TEMA2"
+              },
+              {
+                "name": "1473",
+                "desc": "INSERT- TEMA3"
+              },
+              {
+                "name": "1474",
+                "desc": "INSERT- TEMA4"
+              },
+              {
+                "name": "1477",
+                "desc": "INSERT- TEMA7"
+              },
+              {
+                "name": "1478",
+                "desc": "INSERT- TEMA8"
+              },
+              {
+                "name": "1479",
+                "desc": "INSERT- TEMA9"
+              },
+              {
+                "name": "1480",
+                "desc": "INSERT- TEMA10"
+              },
+              {
+                "name": "1481",
+                "desc": "INSERT- TEMA11"
+              },
+              {
+                "name": "1483",
+                "desc": "INSERT- TEMA13"
+              },
+              {
+                "name": "1484",
+                "desc": "INSERT- TEMA14"
+              },
+              {
+                "name": "1485",
+                "desc": "INSERT- TEMA15"
+              },
+              {
+                "name": "1487",
+                "desc": "INSERT- TEMA17"
+              },
+              {
+                "name": "1489",
+                "desc": "INSERT- TEMA19"
+              },
+              {
+                "name": "1491",
+                "desc": "O-TEMA-MONO4"
+              },
+              {
+                "name": "1492",
+                "desc": "O-TEMA-MONO5"
+              },
+              {
+                "name": "1493",
+                "desc": "MONO-HOME"
+              },
+              {
+                "name": "1499",
+                "desc": "INSERT-MONO-SCT6"
+              },
+              {
+                "name": "1466",
+                "desc": "IPK-CO-9"
+              },
+              {
+                "name": "1500",
+                "desc": "INSERT-MONO-SCT7"
+              },
+              {
+                "name": "1504",
+                "desc": "MONO-FF-SCT19"
+              },
+              {
+                "name": "1505",
+                "desc": "INSERT-BSCT-17"
+              },
+              {
+                "name": "1506",
+                "desc": "INSERT-BSCT-18"
+              },
+              {
+                "name": "1510",
+                "desc": "AYK-B-MONO SP"
+              },
+              {
+                "name": "1512",
+                "desc": "INSERT-MONO"
+              },
+              {
+                "name": "1514",
+                "desc": "FF-B-MONO2"
+              },
+              {
+                "name": "1515",
+                "desc": "FF-B-MONO3"
+              },
+              {
+                "name": "1516",
+                "desc": "FF-B-MONO4"
+              },
+              {
+                "name": "1517",
+                "desc": "INSERT-BBCT-2"
+              },
+              {
+                "name": "1518",
+                "desc": "CAK-SET"
+              },
+              {
+                "name": "1519",
+                "desc": "INSERT-MONO-4"
+              },
+              {
+                "name": "1520",
+                "desc": "ORT-FF-1"
+              },
+              {
+                "name": "1521",
+                "desc": "ORT-FF-2"
+              },
+              {
+                "name": "1547",
+                "desc": "FF-TRIKO-IPK"
+              },
+              {
+                "name": "1550",
+                "desc": "FF TEMA1-IPK"
+              },
+              {
+                "name": "1551",
+                "desc": "FF TEMA1-TWS"
+              },
+              {
+                "name": "1554",
+                "desc": "FF TEMA3-IPK"
+              },
+              {
+                "name": "1555",
+                "desc": "FF TEMA3-TWS"
+              },
+              {
+                "name": "1556",
+                "desc": "FF-B-SMART-IPK"
+              },
+              {
+                "name": "1557",
+                "desc": "FF-B-MCK"
+              },
+              {
+                "name": "1561",
+                "desc": "FF-B-MONO-IPK"
+              },
+              {
+                "name": "1562",
+                "desc": "FF-B-MONO-TWS"
+              },
+              {
+                "name": "1565",
+                "desc": "ORT-BRDG-1-IPK"
+              },
+              {
+                "name": "1566",
+                "desc": "ORT-BRDG-1-TWS"
+              },
+              {
+                "name": "1567",
+                "desc": "TKL1-IPK"
+              },
+              {
+                "name": "1568",
+                "desc": "TKL1-MCK"
+              },
+              {
+                "name": "1570",
+                "desc": "YILBASI-IPK"
+              },
+              {
+                "name": "1571",
+                "desc": "YILBASI-TWS"
+              },
+              {
+                "name": "1573",
+                "desc": "ACTIVEWEAR-AYK"
+              },
+              {
+                "name": "1574",
+                "desc": "ACTIVEWEAR-CAK"
+              },
+              {
+                "name": "1579",
+                "desc": "FF TEMA2-IPK"
+              },
+              {
+                "name": "1580",
+                "desc": "FF TEMA2-TWS"
+              },
+              {
+                "name": "1581",
+                "desc": "FF TEMA4-IPK"
+              },
+              {
+                "name": "1582",
+                "desc": "FF TEMA4-TWS"
+              },
+              {
+                "name": "1586",
+                "desc": "FF-MONT-IPK"
+              },
+              {
+                "name": "1587",
+                "desc": "FF-MONT-TWS"
+              },
+              {
+                "name": "1600",
+                "desc": "B-CAK SP2-IPK"
+              },
+              {
+                "name": "1601",
+                "desc": "B-CAK SP2-TWS"
+              },
+              {
+                "name": "1602",
+                "desc": "B-CAK SP3-IPK"
+              },
+              {
+                "name": "1603",
+                "desc": "B-CAK SP3-TWS"
+              },
+              {
+                "name": "1604",
+                "desc": "B-JEAN P1-IPK"
+              },
+              {
+                "name": "1605",
+                "desc": "B-JEAN P1-TWS"
+              },
+              {
+                "name": "1606",
+                "desc": "CAK SP1-IPK"
+              },
+              {
+                "name": "1607",
+                "desc": "CAK SP1-TWS"
+              },
+              {
+                "name": "1610",
+                "desc": "CARRYOVER-IPK"
+              },
+              {
+                "name": "1611",
+                "desc": "CARRYOVER-TWS"
+              },
+              {
+                "name": "1612",
+                "desc": "CARRYOVER-MONT-IPK"
+              },
+              {
+                "name": "1613",
+                "desc": "CARRYOVER-MONT-TWS"
+              },
+              {
+                "name": "1618",
+                "desc": "FF-B-OUTLET-IPK"
+              },
+              {
+                "name": "1619",
+                "desc": "INSERT-TEMA-2-MCK"
+              },
+              {
+                "name": "1621",
+                "desc": "INSERT-TEMA-3-MCK"
+              },
+              {
+                "name": "1623",
+                "desc": "INSERT-TEMA-4-MCK"
+              },
+              {
+                "name": "1625",
+                "desc": "INSERT-TEMA-5-MCK"
+              },
+              {
+                "name": "1627",
+                "desc": "INSERT-TEMA-6-MCK"
+              },
+              {
+                "name": "1629",
+                "desc": "INSERT-TEMA-7-MCK"
+              },
+              {
+                "name": "1631",
+                "desc": "INSERT-TEMA-8-MCK"
+              },
+              {
+                "name": "1632",
+                "desc": "IPK-CO-1-AYK"
+              },
+              {
+                "name": "1633",
+                "desc": "IPK-CO-1-CAK"
+              },
+              {
+                "name": "1634",
+                "desc": "IPK-CO-2-AYK"
+              },
+              {
+                "name": "1635",
+                "desc": "IPK-CO-2-CAK"
+              },
+              {
+                "name": "1636",
+                "desc": "IPK-CO-3-AYK"
+              },
+              {
+                "name": "1637",
+                "desc": "IPK-CO-3-CAK"
+              },
+              {
+                "name": "1638",
+                "desc": "IPK-CO-4-AYK"
+              },
+              {
+                "name": "1639",
+                "desc": "IPK-CO-4-CAK"
+              },
+              {
+                "name": "1640",
+                "desc": "IPK-CO-5-AYK"
+              },
+              {
+                "name": "1641",
+                "desc": "IPK-CO-5-CAK"
+              },
+              {
+                "name": "1642",
+                "desc": "IPK-CO-6-AYK"
+              },
+              {
+                "name": "1643",
+                "desc": "IPK-CO-6-CAK"
+              },
+              {
+                "name": "1644",
+                "desc": "IPK-CO-7-AYK"
+              },
+              {
+                "name": "1645",
+                "desc": "IPK-CO-7-CAK"
+              },
+              {
+                "name": "1646",
+                "desc": "IPK-CO-8-AYK"
+              },
+              {
+                "name": "1647",
+                "desc": "JEAN B-SP1-IPK"
+              },
+              {
+                "name": "1648",
+                "desc": "JEAN B-SP1-TWS"
+              },
+              {
+                "name": "1649",
+                "desc": "ORT-BRDG-2-IPK"
+              },
+              {
+                "name": "1650",
+                "desc": "ORT-BRDG-2-TWS"
+              },
+              {
+                "name": "639",
+                "desc": "TRK"
+              },
+              {
+                "name": "1488",
+                "desc": "INSERT- TEMA18"
+              },
+              {
+                "name": "1486",
+                "desc": "INSERT- TEMA16"
+              },
+              {
+                "name": "1482",
+                "desc": "INSERT- TEMA12"
+              },
+              {
+                "name": "1193",
+                "desc": "INSERT-BBCT-1"
+              },
+              {
+                "name": "1476",
+                "desc": "INSERT- TEMA6"
+              },
+              {
+                "name": "1475",
+                "desc": "INSERT- TEMA5"
+              },
+              {
+                "name": "703",
+                "desc": "MCK KABAN"
+              },
+              {
+                "name": "1614",
+                "desc": "FF-TRIKO-IPK-P1"
+              },
+              {
+                "name": "000",
+                "desc": "IPTAL"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Sezon",
+          "desc": "Sezon",
+          "type": "1",
+          "qual": "Sezon",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false",
+          "vsEntity": "Tema_Sezon",
+          "vsAttr": "value",
+          "valueset": {
+            "value": [
+              {
+                "name": "2026-27 KIS",
+                "desc": "FW 26/27"
+              }
+            ]
+          }
+        },
+        {
+          "name": "LifeStyleGrup",
+          "desc": "LifeStyleGrup",
+          "type": "1",
+          "qual": "LifeStyleGrup",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false",
+          "vsEntity": "LifeStyleGrup",
+          "vsAttr": "value",
+          "valueset": {
+            "value": [
+              {
+                "name": "003",
+                "desc": "Tema"
+              },
+              {
+                "name": "008",
+                "desc": "Business"
+              },
+              {
+                "name": "001",
+                "desc": "Mono"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Tema_Ismi",
+          "desc": "Tema Ismi",
+          "type": "1",
+          "qual": "Tema_Ismi",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false"
+        },
+        {
+          "name": "Koleksiyon_Tipi",
+          "desc": "Koleksiyon Tipi",
+          "type": "1",
+          "qual": "Koleksiyon_Tipi",
+          "required": "false",
+          "unique": "false",
+          "searchable": "false",
+          "repr": "false",
+          "vsEntity": "KoleksiyonTipi",
+          "vsAttr": "value",
+          "valueset": {
+            "value": [
+              {
+                "name": "001",
+                "desc": "Ana Koleksiyon"
+              },
+              {
+                "name": "009",
+                "desc": "Insert"
+              },
+              {
+                "name": "004",
+                "desc": "Bridge"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "acls": {
+      "acl": [
+        {
+          "id": "2",
+          "name": "Private",
+          "desc": "Only the last modifier of the item can read and edit"
+        },
+        {
+          "id": "1",
+          "name": "Public",
+          "desc": "Open for all users to read and edit"
+        }
+      ]
+    }
+  }
+}
