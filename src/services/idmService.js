@@ -270,20 +270,22 @@ class IdmService {
    */
   async getThemeWithAttributes(themeId, themeData) {
     try {
-      // Theme description'ı al
+      // Theme description'ı al (hem eski hem yeni API formatını destekle)
       const themeInfo = themeData.themeInfo;
+      const themeDescription = themeInfo?.themeDescription || themeInfo?.Description;
       
-      if (!themeInfo || !themeInfo.themeDescription) {
+      if (!themeDescription) {
         console.log('⚠️  Theme description bulunamadı');
         return {
           themeId: themeId,
           themeData: themeData,
           attributes: null,
+          mappedAttributes: [],
           error: 'No theme description found'
         };
       }
       
-      const pid = themeInfo.themeDescription;
+      const pid = themeDescription;
       console.log(`\n📋 Theme Description: ${pid}`);
       
       // PID'yi parse et

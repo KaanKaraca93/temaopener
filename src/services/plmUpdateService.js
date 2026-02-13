@@ -1,6 +1,7 @@
 const axios = require('axios');
 const tokenService = require('./tokenService');
 const plmStyleService = require('./plmStyleService');
+const idmService = require('./idmService');
 const PLM_CONFIG = require('../config/plm.config');
 
 /**
@@ -204,14 +205,17 @@ class PlmUpdateService {
       }
       
       // 3. Aktif renkleri bul (ColorwayStatus = 1)
-      const activeColorways = styleColorways.filter(scw => 
-        scw.styleId === styleId && scw.ColorwayStatus === 1
-      );
+      // Field isimleri hem PascalCase hem camelCase olabilir (farklı API'lerden geldiği için)
+      const activeColorways = styleColorways.filter(scw => {
+        const scwStyleId = scw.StyleId || scw.styleId;
+        const scwStatus = scw.ColorwayStatus || scw.colorwayStatus;
+        return scwStyleId === styleId && scwStatus === 1;
+      });
       
       console.log(`   🎨 ${activeColorways.length} aktif renk bulundu`);
       
       // 4. Aktif renklerin ThemeId'lerini topla (benzersiz)
-      const activeThemes = [...new Set(activeColorways.map(scw => scw.themeId))];
+      const activeThemes = [...new Set(activeColorways.map(scw => scw.ThemeId || scw.themeId))];
       console.log(`   📋 Aktif renklerin temaları: [${activeThemes.join(', ')}]`);
       
       // 5. IPTAL (1172) dışında tema var mı?
@@ -275,6 +279,118 @@ class PlmUpdateService {
     } catch (error) {
       console.error(`❌ Style ${styleId} kontrol/güncelleme hatası:`, error.message);
       return { updated: false, error: error.message, styleId: styleId };
+    }
+  }
+
+  /**
+   * Tek bir Style için ColorwayColorway'leri güncelle
+   * @param {number} styleId - Style ID
+   * @param {Object} styleData - Style ve colorway verisi
+   * @returns {Promise<Object>} Güncelleme sonuçları
+   */
+  async updateStyleColorways(styleId, styleData) {
+    try {
+      console.log(`\n🔄 Style ${styleId} için güncelleme başlatılıyor...`);
+      
+      const { styleInfo, colorways } = styleData;
+      
+      if (!colorways || colorways.length === 0) {
+        throw new Error('Colorway verisi bulunamadı');
+      }
+      
+      console.log(`📊 ${colorways.length} adet colorway bulundu`);
+      
+      // Benzersiz ThemeId'leri bul
+      const uniqueThemeIds = [...new Set(colorways.map(c => c.ThemeId))];
+      console.log(`🎨 ${uniqueThemeIds.length} benzersiz tema bulundu: [${uniqueThemeIds.join(', ')}]`);
+      
+      // Her tema için IDM'den özellik çek
+      const themeAttributesMap = {};
+      
+      for (const themeId of uniqueThemeIds) {
+        console.log(`\n📥 Theme ${themeId} için IDM özellikleri çekiliyor...`);
+        
+        // Bu temayı kullanan herhangi bir colorway'i bul (Theme.Description için)
+        const colorwayWithTheme = colorways.find(c => c.ThemeId === themeId);
+        if (!colorwayWithTheme || !colorwayWithTheme.Theme || !colorwayWithTheme.Theme.Description) {
+          console.log(`⚠️  Theme ${themeId} için Description bulunamadı, atlanıyor`);
+          continue;
+        }
+        
+        try {
+          // IDM'den tema özelliklerini çek
+          const themeAttributes = await idmService.getThemeWithAttributes(themeId, {
+            themeInfo: colorwayWithTheme.Theme,
+            styleColorways: [colorwayWithTheme]
+          });
+          
+          themeAttributesMap[themeId] = themeAttributes.mappedAttributes;
+          console.log(`✅ Theme ${themeId} özellikleri alındı`);
+          
+        } catch (error) {
+          console.error(`❌ Theme ${themeId} özellikleri alınırken hata:`, error.message);
+          // Hata olsa bile devam et
+        }
+      }
+      
+      // Her colorway için patch payload oluştur
+      console.log(`\n📦 Colorway'ler için PATCH payload oluşturuluyor...`);
+      const patchPayloads = [];
+      
+      for (const colorway of colorways) {
+        const themeAttributes = themeAttributesMap[colorway.ThemeId];
+        
+        if (!themeAttributes) {
+          console.log(`⚠️  ColorwayId ${colorway.StyleColorwayId}: Theme ${colorway.ThemeId} özellikleri yok, atlanıyor`);
+          continue;
+        }
+        
+        // Açıklamaları çıkar
+        const descriptions = this.extractDescriptions(themeAttributes);
+        
+        // Payload oluştur
+        const payload = this.buildPatchPayload(colorway.StyleColorwayId, descriptions);
+        patchPayloads.push(payload);
+      }
+      
+      if (patchPayloads.length === 0) {
+        throw new Error('Güncellenecek colorway bulunamadı');
+      }
+      
+      console.log(`\n📋 ${patchPayloads.length} adet colorway güncellenecek`);
+      console.log(`\n📦 İlk payload örneği:`);
+      console.log(JSON.stringify(patchPayloads[0], null, 2));
+      
+      // PATCH yap
+      const patchResult = await this.patchStyleColorways(patchPayloads);
+      
+      console.log(`\n✅ StyleColorway güncellemesi tamamlandı`);
+      
+      // İş kuralı: Style Status ve ThemeId kontrolü
+      console.log(`\n\n🔍 İş Kuralı - Style Status ve ThemeId Kontrolü`);
+      console.log(`═`.repeat(70));
+      
+      const styleUpdateResult = await this.checkAndUpdateStyle(
+        styleId,
+        colorways,
+        styleInfo.ThemeId
+      );
+      
+      console.log(`\n✅ Style kontrol/güncelleme tamamlandı`);
+      
+      return {
+        success: true,
+        styleId: styleId,
+        totalColorways: colorways.length,
+        updatedColorways: patchPayloads.length,
+        uniqueThemes: uniqueThemeIds.length,
+        patchResult: patchResult,
+        styleUpdateResult: styleUpdateResult
+      };
+      
+    } catch (error) {
+      console.error(`❌ Style ${styleId} güncelleme hatası:`, error.message);
+      throw error;
     }
   }
 

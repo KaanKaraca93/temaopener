@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const plmThemeService = require('../services/plmThemeService');
+const plmStyleService = require('../services/plmStyleService');
 const idmService = require('../services/idmService');
 const plmUpdateService = require('../services/plmUpdateService');
 
@@ -211,6 +212,81 @@ router.post('/theme/update', async (req, res) => {
     
   } catch (error) {
     console.error('❌ Error processing theme update request:', error.message);
+    
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error',
+      message: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+/**
+ * POST /api/style/update
+ * StyleId ile style'ın tüm colorway'lerini günceller
+ * Body: { "StyleId": 123 }
+ */
+router.post('/style/update', async (req, res) => {
+  try {
+    const { StyleId } = req.body;
+    
+    // Validation
+    if (!StyleId) {
+      return res.status(400).json({
+        success: false,
+        error: 'StyleId is required',
+        message: 'Please provide StyleId in request body'
+      });
+    }
+    
+    if (typeof StyleId !== 'number' || StyleId <= 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid StyleId',
+        message: 'StyleId must be a positive number'
+      });
+    }
+    
+    console.log(`\n📥 Incoming update request for StyleId: ${StyleId}`);
+    
+    // 1. Fetch style with colorways from PLM
+    const styleData = await plmStyleService.getStyleWithColorways(StyleId);
+    
+    if (!styleData) {
+      return res.status(404).json({
+        success: false,
+        error: 'Style not found',
+        message: `Style with ID ${StyleId} not found`,
+        timestamp: new Date().toISOString()
+      });
+    }
+    
+    // 2. Update colorways in PLM
+    const updateResult = await plmUpdateService.updateStyleColorways(StyleId, styleData);
+    
+    // Response
+    const response = {
+      success: updateResult.success,
+      styleId: StyleId,
+      styleInfo: styleData.styleInfo,
+      updateSummary: {
+        totalColorways: updateResult.totalColorways,
+        updatedColorways: updateResult.updatedColorways,
+        uniqueThemes: updateResult.uniqueThemes,
+        styleUpdated: updateResult.styleUpdateResult.updated || false
+      },
+      patchResult: updateResult.patchResult,
+      styleUpdateResult: updateResult.styleUpdateResult,
+      timestamp: new Date().toISOString()
+    };
+    
+    console.log(`✅ Update completed: ${updateResult.updatedColorways}/${updateResult.totalColorways} colorways updated\n`);
+    
+    res.json(response);
+    
+  } catch (error) {
+    console.error('❌ Error processing style update request:', error.message);
     
     res.status(500).json({
       success: false,

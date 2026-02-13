@@ -1,0 +1,851 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Ipekyol Tema API",
+    "description": "PLM entegrasyonu ile tema işlemleri için API servisi. ThemeId ile PLM'den StyleColorways ve IDM'den attributes çeker, kod-açıklama eşleştirmesi yapar ve PLM'e otomatik güncelleme yapar.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Ipekyol API Support"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://temaopener-0b1461eedf75.herokuapp.com",
+      "description": "Production Server (Heroku)"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "Local Development Server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Health",
+      "description": "Health check endpoints"
+    },
+    {
+      "name": "Theme",
+      "description": "Tema işlemleri"
+    },
+    {
+      "name": "Style",
+      "description": "Style işlemleri"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["Health"],
+        "summary": "API Health Check",
+        "description": "API'nin çalışıp çalışmadığını kontrol eder ve mevcut endpoint'leri listeler",
+        "responses": {
+          "200": {
+            "description": "API çalışıyor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Ipekyol Tema API is running"
+                    },
+                    "endpoints": {
+                      "type": "object",
+                      "properties": {
+                        "health": {
+                          "type": "string",
+                          "example": "GET /"
+                        },
+                        "themeHealth": {
+                          "type": "string",
+                          "example": "GET /api/theme/health"
+                        },
+                        "getTheme": {
+                          "type": "string",
+                          "example": "POST /api/theme (Body: { \"ThemeId\": 1174 })"
+                        },
+                        "getThemeAttributes": {
+                          "type": "string",
+                          "example": "POST /api/theme/attributes (Body: { \"ThemeId\": 1174 })"
+                        },
+                        "updateTheme": {
+                          "type": "string",
+                          "example": "POST /api/theme/update (Body: { \"ThemeId\": 1174 })"
+                        }
+                      }
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2026-02-12T14:09:50.578Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/theme/health": {
+      "get": {
+        "tags": ["Health"],
+        "summary": "Theme Service Health Check",
+        "description": "Tema servisinin çalışıp çalışmadığını kontrol eder",
+        "responses": {
+          "200": {
+            "description": "Servis sağlıklı",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "service": {
+                      "type": "string",
+                      "example": "Theme Service"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "healthy"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/theme": {
+      "post": {
+        "tags": ["Theme"],
+        "summary": "Tema Bilgisi (StyleColorways)",
+        "description": "ThemeId ile PLM'den StyleColorways bilgilerini çeker. Theme expansion ile tema detaylarını da getirir.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tema bilgileri başarıyla alındı",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Geçersiz istek",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Sunucu hatası",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/theme/attributes": {
+      "post": {
+        "tags": ["Theme"],
+        "summary": "Tema Özellikleri (Attributes + Value Lists)",
+        "description": "ThemeId ile PLM'den StyleColorways ve IDM'den attributes çeker. Kod-açıklama eşleştirmesi yapar ve tam veri döner.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tema özellikleri başarıyla alındı",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeAttributesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Geçersiz istek",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Sunucu hatası",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/theme/update": {
+      "post": {
+        "tags": ["Theme"],
+        "summary": "Tema Güncelleme (PATCH to PLM)",
+        "description": "ThemeId ile tema bilgilerini çeker, kod-açıklama eşleştirmesi yapar ve PLM'deki StyleColorways'leri günceller. Ayrıca iş kurallarına göre Style Status ve ThemeId kontrolü yapıp gerekirse günceller ve sync işlemi tetikler.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tema başarıyla güncellendi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeUpdateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Geçersiz istek",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Sunucu hatası",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/style/update": {
+      "post": {
+        "tags": ["Style"],
+        "summary": "Style Güncelleme (StyleId Bazlı)",
+        "description": "StyleId ile style'ın tüm colorway'lerini çeker, her colorway için kendi temasının IDM özelliklerini alır ve PLM'e günceller. İş kurallarına göre Style Status ve ThemeId kontrolü yapıp gerekirse günceller ve sync işlemi tetikler.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StyleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Style başarıyla güncellendi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StyleUpdateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Geçersiz istek",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Style bulunamadı",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Sunucu hatası",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ThemeRequest": {
+        "type": "object",
+        "required": ["ThemeId"],
+        "properties": {
+          "ThemeId": {
+            "type": "integer",
+            "description": "PLM'deki Theme ID",
+            "example": 1174,
+            "minimum": 1
+          }
+        }
+      },
+      "ThemeResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "themeId": {
+            "type": "integer",
+            "example": 1174
+          },
+          "themeInfo": {
+            "type": "object",
+            "properties": {
+              "themeName": {
+                "type": "string",
+                "example": "IONTEST"
+              },
+              "themeDescription": {
+                "type": "string",
+                "example": "Theme_Attributes-115-0-LATEST"
+              },
+              "themeCode": {
+                "type": "string",
+                "example": "6803"
+              }
+            }
+          },
+          "summary": {
+            "type": "object",
+            "properties": {
+              "totalStyleColorways": {
+                "type": "integer",
+                "example": 3
+              },
+              "totalStyles": {
+                "type": "integer",
+                "example": 2
+              }
+            }
+          },
+          "styleColorways": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StyleColorway"
+            }
+          },
+          "groupedByStyle": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "styleId": {
+                  "type": "integer",
+                  "example": 11692
+                },
+                "colorways": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ThemeAttributesResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "themeId": {
+            "type": "integer",
+            "example": 1174
+          },
+          "themeInfo": {
+            "$ref": "#/components/schemas/ThemeInfo"
+          },
+          "summary": {
+            "type": "object",
+            "properties": {
+              "totalStyleColorways": {
+                "type": "integer",
+                "example": 3
+              },
+              "totalStyles": {
+                "type": "integer",
+                "example": 2
+              },
+              "attributeCount": {
+                "type": "integer",
+                "example": 16
+              },
+              "valueListCount": {
+                "type": "integer",
+                "example": 11
+              }
+            }
+          },
+          "styleColorways": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StyleColorway"
+            }
+          },
+          "groupedByStyle": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "themeAttributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ThemeAttribute"
+            },
+            "description": "Kod-açıklama eşleştirilmiş tema özellikleri"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ThemeUpdateResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "themeId": {
+            "type": "integer",
+            "example": 1174
+          },
+          "themeInfo": {
+            "$ref": "#/components/schemas/ThemeInfo"
+          },
+          "updateSummary": {
+            "type": "object",
+            "properties": {
+              "totalStyles": {
+                "type": "integer",
+                "example": 2,
+                "description": "Toplam güncellenen style sayısı"
+              },
+              "successfulStyles": {
+                "type": "integer",
+                "example": 2,
+                "description": "Başarıyla güncellenen style sayısı"
+              },
+              "failedStyles": {
+                "type": "integer",
+                "example": 0,
+                "description": "Hata alan style sayısı"
+              },
+              "totalUpdatedStyleColorways": {
+                "type": "integer",
+                "example": 3,
+                "description": "Toplam güncellenen StyleColorway sayısı"
+              },
+              "styleUpdatedCount": {
+                "type": "integer",
+                "example": 0,
+                "description": "İş kuralı gereği Status/ThemeId güncellenen Style sayısı"
+              }
+            }
+          },
+          "styleColorwayResults": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "styleId": {
+                  "type": "integer",
+                  "example": 11692
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "updatedCount": {
+                  "type": "integer",
+                  "example": 2
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "styleUpdateResults": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "updated": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "reason": {
+                  "type": "string",
+                  "example": "Status is not 1"
+                },
+                "styleId": {
+                  "type": "integer",
+                  "example": 11692
+                }
+              }
+            },
+            "description": "İş kuralı sonuçları (Style Status ve ThemeId kontrol/güncelleme)"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "StyleColorway": {
+        "type": "object",
+        "properties": {
+          "styleColorwayId": {
+            "type": "integer",
+            "example": 12885
+          },
+          "styleId": {
+            "type": "integer",
+            "example": 11692
+          },
+          "colorrngId": {
+            "type": "integer",
+            "example": 14
+          },
+          "colorwayCode": {
+            "type": "string",
+            "example": "008"
+          },
+          "colorwayName": {
+            "type": "string",
+            "example": "MURDUM"
+          },
+          "themeId": {
+            "type": "integer",
+            "example": 1174
+          },
+          "hexValue": {
+            "type": "string",
+            "example": "#742e82"
+          },
+          "ColorwayStatus": {
+            "type": "integer",
+            "example": 1,
+            "description": "1: Aktif, diğer: Pasif"
+          },
+          "theme": {
+            "$ref": "#/components/schemas/ThemeInfo"
+          }
+        }
+      },
+      "ThemeInfo": {
+        "type": "object",
+        "properties": {
+          "themeName": {
+            "type": "string",
+            "example": "IONTEST"
+          },
+          "themeCode": {
+            "type": "string",
+            "example": "6803"
+          },
+          "themeDescription": {
+            "type": "string",
+            "example": "Theme_Attributes-115-0-LATEST"
+          }
+        }
+      },
+      "ThemeAttribute": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Ana_Tema",
+            "description": "Attribute adı"
+          },
+          "type": {
+            "type": "string",
+            "example": "1"
+          },
+          "qualifier": {
+            "type": "string",
+            "example": "Ana_Tema"
+          },
+          "value": {
+            "type": "string",
+            "example": "027",
+            "description": "Kod değeri"
+          },
+          "parsedValue": {
+            "description": "Type'a göre parse edilmiş değer"
+          },
+          "codeDescription": {
+            "type": "string",
+            "example": "BCT 1",
+            "description": "Kodun açıklaması (value list'ten eşleştirilmiş)"
+          },
+          "mapped": {
+            "type": "boolean",
+            "example": true,
+            "description": "Kod-açıklama eşleşmesi yapıldı mı?"
+          }
+        }
+      },
+      "StyleRequest": {
+        "type": "object",
+        "required": ["StyleId"],
+        "properties": {
+          "StyleId": {
+            "type": "integer",
+            "description": "PLM'deki Style ID",
+            "example": 11699,
+            "minimum": 1
+          }
+        }
+      },
+      "StyleUpdateResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "styleId": {
+            "type": "integer",
+            "example": 11699
+          },
+          "styleInfo": {
+            "type": "object",
+            "properties": {
+              "StyleId": {
+                "type": "integer",
+                "example": 11699
+              },
+              "Status": {
+                "type": "integer",
+                "example": 1
+              },
+              "ThemeId": {
+                "type": "integer",
+                "nullable": true,
+                "example": null
+              }
+            }
+          },
+          "updateSummary": {
+            "type": "object",
+            "properties": {
+              "totalColorways": {
+                "type": "integer",
+                "example": 1,
+                "description": "Toplam colorway sayısı"
+              },
+              "updatedColorways": {
+                "type": "integer",
+                "example": 1,
+                "description": "Güncellenen colorway sayısı"
+              },
+              "uniqueThemes": {
+                "type": "integer",
+                "example": 1,
+                "description": "Benzersiz tema sayısı"
+              },
+              "styleUpdated": {
+                "type": "boolean",
+                "example": true,
+                "description": "Style'ın kendisi güncellendi mi?"
+              }
+            }
+          },
+          "patchResult": {
+            "type": "object",
+            "properties": {
+              "success": {
+                "type": "boolean",
+                "example": true
+              },
+              "statusCode": {
+                "type": "integer",
+                "example": 200
+              },
+              "updatedCount": {
+                "type": "integer",
+                "example": 1
+              }
+            }
+          },
+          "styleUpdateResult": {
+            "type": "object",
+            "properties": {
+              "updated": {
+                "type": "boolean",
+                "example": true,
+                "description": "Style güncellendi mi?"
+              },
+              "styleId": {
+                "type": "integer",
+                "example": 11699
+              },
+              "updates": {
+                "type": "object",
+                "properties": {
+                  "Status": {
+                    "type": "integer",
+                    "example": 2
+                  },
+                  "ThemeId": {
+                    "type": "integer",
+                    "example": 1174
+                  }
+                }
+              },
+              "patchResult": {
+                "type": "object",
+                "properties": {
+                  "success": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "statusCode": {
+                    "type": "integer",
+                    "example": 204
+                  }
+                }
+              },
+              "syncResult": {
+                "type": "object",
+                "properties": {
+                  "success": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "statusCode": {
+                    "type": "integer",
+                    "example": 200
+                  },
+                  "schema": {
+                    "type": "string",
+                    "example": "FSH2",
+                    "description": "FSH2: Production, FSH1: Test"
+                  }
+                }
+              }
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "error": {
+            "type": "string",
+            "example": "Invalid ThemeId"
+          },
+          "message": {
+            "type": "string",
+            "example": "ThemeId must be a positive number"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
