@@ -198,64 +198,118 @@ class PlmUpdateService {
       console.log(`   Mevcut Status: ${style.Status}`);
       console.log(`   Mevcut ThemeId: ${style.ThemeId}`);
       
-      // 2. Status = 1 değilse, güncelleme yapma
-      if (style.Status !== 1) {
-        console.log(`   ℹ️  Status ${style.Status} (güncelleme gerekmez)`);
-        return { updated: false, reason: 'Status is not 1' };
-      }
-      
-      // 3. Aktif renkleri bul (ColorwayStatus = 1)
-      // Field isimleri hem PascalCase hem camelCase olabilir (farklı API'lerden geldiği için)
-      const activeColorways = styleColorways.filter(scw => {
-        const scwStyleId = scw.StyleId || scw.styleId;
-        const scwStatus = scw.ColorwayStatus || scw.colorwayStatus;
-        return scwStyleId === styleId && scwStatus === 1;
-      });
-      
-      console.log(`   🎨 ${activeColorways.length} aktif renk bulundu`);
-      
-      // 4. Aktif renklerin ThemeId'lerini topla (benzersiz)
-      const activeThemes = [...new Set(activeColorways.map(scw => scw.ThemeId || scw.themeId))];
-      console.log(`   📋 Aktif renklerin temaları: [${activeThemes.join(', ')}]`);
-      
-      // 5. IPTAL (1172) dışında tema var mı?
-      const nonIptalThemes = activeThemes.filter(tid => tid !== IPTAL_THEME_ID);
-      
       const updates = {};
       let needsUpdate = false;
       
-      // 6. İş kuralı kontrolü
-      if (nonIptalThemes.length > 0) {
-        // IPTAL dışında tema var
-        console.log(`   ✓ IPTAL dışında temalar: [${nonIptalThemes.join(', ')}]`);
+      // 2. Status Güncellemesi (Bağımsız Kontrol #1)
+      console.log(`\n📌 STATUS KONTROLÜ:`);
+      if (style.Status === 1) {
+        // Aktif renkleri bul (ColorwayStatus = 1)
+        const activeColorways = styleColorways.filter(scw => {
+          const scwStyleId = scw.StyleId || scw.styleId;
+          const scwStatus = scw.ColorwayStatus || scw.colorwayStatus;
+          return scwStyleId === styleId && scwStatus === 1;
+        });
         
-        // Status'ü 2'ye çek
-        if (style.Status === 1) {
+        console.log(`   🎨 ${activeColorways.length} aktif renk bulundu`);
+        
+        // Aktif renklerin ThemeId'lerini topla (benzersiz, null/undefined hariç)
+        const activeThemes = [...new Set(
+          activeColorways
+            .map(scw => scw.ThemeId || scw.themeId)
+            .filter(tid => tid != null)
+        )];
+        console.log(`   📋 Aktif renklerin temaları: [${activeThemes.join(', ')}]`);
+        
+        // IPTAL (1172) dışında tema var mı?
+        const nonIptalActiveThemes = activeThemes.filter(tid => tid !== IPTAL_THEME_ID);
+        
+        if (nonIptalActiveThemes.length > 0) {
+          console.log(`   ✓ IPTAL dışında aktif temalar var: [${nonIptalActiveThemes.join(', ')}]`);
           updates.Status = 2;
           needsUpdate = true;
           console.log(`   → Status 1'den 2'ye güncellenecek`);
-        }
-        
-        // ThemeId'yi güncelle (IPTAL dışındaki herhangi bir tema)
-        const newThemeId = nonIptalThemes[0]; // İlk IPTAL olmayan temayı al
-        if (style.ThemeId !== newThemeId) {
-          updates.ThemeId = newThemeId;
-          needsUpdate = true;
-          console.log(`   → ThemeId ${style.ThemeId}'den ${newThemeId}'e güncellenecek`);
+        } else {
+          console.log(`   ℹ️  IPTAL dışında aktif tema yok, Status değişmeyecek`);
         }
       } else {
-        // Sadece IPTAL temaları var
-        console.log(`   ℹ️  Sadece IPTAL (1172) teması var`);
+        console.log(`   ℹ️  Status ${style.Status} (1 değil, güncelleme gerekmez)`);
+      }
+      
+      // 3. ThemeId Güncellemesi (Bağımsız Kontrol #2)
+      console.log(`\n📌 THEMEID KONTROLÜ:`);
+      
+      // Aktif ve pasif renkleri ayır
+      const thisStyleColorways = styleColorways.filter(scw => (scw.StyleId || scw.styleId) === styleId);
+      const activeColorways = thisStyleColorways.filter(scw => (scw.ColorwayStatus || scw.colorwayStatus) === 1);
+      const passiveColorways = thisStyleColorways.filter(scw => (scw.ColorwayStatus || scw.colorwayStatus) !== 1);
+      
+      // Aktif renklerin ThemeId'leri (null/undefined hariç)
+      const activeThemeIds = [...new Set(
+        activeColorways
+          .map(scw => scw.ThemeId || scw.themeId)
+          .filter(tid => tid != null)
+      )];
+      
+      console.log(`   🎨 Aktif renk sayısı: ${activeColorways.length}, Temaları: [${activeThemeIds.join(', ') || 'Boş'}]`);
+      console.log(`   💤 Pasif renk sayısı: ${passiveColorways.length}`);
+      console.log(`   📋 Style ThemeId: ${style.ThemeId || 'Boş'}`);
+      
+      // Style ThemeId aktif renklerin hiçbirinde var mı?
+      const styleThemeInActiveColorways = style.ThemeId != null && activeThemeIds.includes(style.ThemeId);
+      
+      if (styleThemeInActiveColorways) {
+        console.log(`   ✓ Style ThemeId (${style.ThemeId}) aktif renklerde mevcut, güncelleme gerekmez`);
+      } else {
+        console.log(`   ⚠️  Style ThemeId (${style.ThemeId || 'Boş'}) aktif renklerde YOK, güncelleme gerekiyor...`);
         
-        // ThemeId'yi 1172 yap (eğer değilse)
-        if (style.ThemeId !== IPTAL_THEME_ID) {
+        // Öncelik 1: Aktif renklerdeki 1172 dışı temalar
+        const activeNonIptalThemes = activeThemeIds.filter(tid => tid !== IPTAL_THEME_ID);
+        
+        if (activeNonIptalThemes.length > 0) {
+          const newThemeId = activeNonIptalThemes[0];
+          console.log(`   ✓ Öncelik 1: Aktif renklerde IPTAL dışı tema bulundu: ${newThemeId}`);
+          updates.ThemeId = newThemeId;
+          needsUpdate = true;
+          console.log(`   → ThemeId ${style.ThemeId || 'Boş'}'den ${newThemeId}'e güncellenecek`);
+        } else if (activeThemeIds.includes(IPTAL_THEME_ID)) {
+          // Öncelik 2: Aktif renklerde sadece 1172 var
+          console.log(`   ✓ Öncelik 2: Aktif renklerde sadece IPTAL (1172) var`);
           updates.ThemeId = IPTAL_THEME_ID;
           needsUpdate = true;
-          console.log(`   → ThemeId ${style.ThemeId}'den ${IPTAL_THEME_ID}'e güncellenecek`);
+          console.log(`   → ThemeId ${style.ThemeId || 'Boş'}'den ${IPTAL_THEME_ID}'e güncellenecek`);
+        } else {
+          // Öncelik 3 ve 4: Pasif renklere bak
+          const passiveThemeIds = [...new Set(
+            passiveColorways
+              .map(scw => scw.ThemeId || scw.themeId)
+              .filter(tid => tid != null)
+          )];
+          
+          console.log(`   ℹ️  Aktif renklerde tema yok, pasif renklere bakılıyor: [${passiveThemeIds.join(', ') || 'Boş'}]`);
+          
+          // Öncelik 3: Pasif renklerdeki 1172 dışı temalar
+          const passiveNonIptalThemes = passiveThemeIds.filter(tid => tid !== IPTAL_THEME_ID);
+          
+          if (passiveNonIptalThemes.length > 0) {
+            const newThemeId = passiveNonIptalThemes[0];
+            console.log(`   ✓ Öncelik 3: Pasif renklerde IPTAL dışı tema bulundu: ${newThemeId}`);
+            updates.ThemeId = newThemeId;
+            needsUpdate = true;
+            console.log(`   → ThemeId ${style.ThemeId || 'Boş'}'den ${newThemeId}'e güncellenecek`);
+          } else if (passiveThemeIds.includes(IPTAL_THEME_ID)) {
+            // Öncelik 4: Pasif renklerde sadece 1172 var
+            console.log(`   ✓ Öncelik 4: Pasif renklerde sadece IPTAL (1172) var`);
+            updates.ThemeId = IPTAL_THEME_ID;
+            needsUpdate = true;
+            console.log(`   → ThemeId ${style.ThemeId || 'Boş'}'den ${IPTAL_THEME_ID}'e güncellenecek`);
+          } else {
+            console.log(`   ℹ️  Hiçbir colorway'de tema bulunamadı, güncelleme yapılmayacak`);
+          }
         }
       }
       
-      // 7. Güncelleme gerekiyorsa yap
+      // 4. Güncelleme gerekiyorsa yap
       if (needsUpdate) {
         console.log(`\n📝 Style ${styleId} güncelleniyor...`);
         const patchResult = await plmStyleService.patchStyle(styleId, updates);
