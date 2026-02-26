@@ -328,6 +328,176 @@ class IdmService {
       };
     }
   }
+
+  /**
+   * PID ile tema özelliklerini özel formatta çek (ERP için)
+   * @param {string} pidDocId - Item PID (örn: "Theme_Attributes-115-0-LATEST")
+   * @returns {Promise<Object>} Özel formatlı tema verisi
+   */
+  async getThemeAttributesFormatted(pidDocId) {
+    try {
+      console.log(`\n📥 Theme Attributes (Formatted) isteği: ${pidDocId}`);
+      
+      // PID'yi parse et
+      const parsedPid = this.parseThemeDescription(pidDocId);
+      console.log(`📊 Parsed PID:`, JSON.stringify(parsedPid, null, 2));
+      
+      // IDM'den özellikleri çek
+      const idmData = await this.getItemByPid(pidDocId);
+      
+      if (!idmData || !idmData.attributes) {
+        throw new Error('IDM data not found or no attributes available');
+      }
+      
+      // Entity değer listelerini çek
+      const entityName = parsedPid.baseName; // Theme_Attributes
+      console.log(`\n📚 Değer listeleri çekiliyor: ${entityName}`);
+      const entityData = await this.getEntityValueLists(entityName);
+      
+      // Attribute'ları değer listeleri ile eşleştir
+      let mappedAttributes = [];
+      if (entityData && entityData.valueLists) {
+        console.log(`\n🔗 Attribute'lar değer listeleri ile eşleştiriliyor...`);
+        mappedAttributes = this.mapAttributesWithValueLists(idmData.attributes, entityData.valueLists);
+        console.log(`✅ ${mappedAttributes.length} attribute eşleştirildi`);
+      }
+      
+      // Özel formata çevir
+      const themeData = this.formatThemeData(mappedAttributes);
+      
+      const result = {
+        BatchId: `${pidDocId}_${Date.now()}`,
+        ProcessedDate: new Date().toISOString(),
+        ThemeData: [themeData]
+      };
+      
+      console.log(`✅ Theme Attributes (Formatted) hazırlandı\n`);
+      
+      return result;
+      
+    } catch (error) {
+      console.error('❌ Theme attributes (formatted) hatası:', error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * Mapped attribute'ları özel formata çevir
+   * @param {Array} mappedAttributes - Eşleştirilmiş attribute'lar
+   * @returns {Object} Özel formatlı tema verisi
+   */
+  formatThemeData(mappedAttributes) {
+    const result = {};
+    
+    // Attribute değerlerini bul
+    const getAttrValue = (name) => {
+      const attr = mappedAttributes.find(a => a.name === name);
+      return attr ? attr.value : null;
+    };
+    
+    const getAttrDescription = (name) => {
+      const attr = mappedAttributes.find(a => a.name === name);
+      return attr ? attr.codeDescription : null;
+    };
+    
+    // InStore tarihini formatla (YYYY-MM-DD -> DD.MM.YYYY)
+    const formatInStoreDate = (dateStr) => {
+      if (!dateStr) return null;
+      
+      // Eğer zaten DD.MM.YYYY formatındaysa
+      if (dateStr.includes('.')) return dateStr;
+      
+      // YYYY-MM-DD veya ISO formatı ise
+      const date = new Date(dateStr);
+      if (!isNaN(date.getTime())) {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}.${month}.${year}`;
+      }
+      
+      return dateStr;
+    };
+    
+    // Helper: Sadece dolu alanları ekle
+    const addIfNotEmpty = (key, value) => {
+      if (value !== null && value !== undefined && value !== '' && value !== 0) {
+        result[key] = value;
+      }
+    };
+    
+    // Helper: Kod-Desc çiftini ekle (sadece desc varsa)
+    const addCodeDescPair = (codeKey, descKey, attrName) => {
+      const code = getAttrValue(attrName);
+      const desc = getAttrDescription(attrName);
+      
+      // Eğer description varsa, ikisini de ekle
+      if (desc !== null && desc !== undefined && desc !== '') {
+        if (code !== null && code !== undefined && code !== '' && code !== 0) {
+          result[codeKey] = code;
+        }
+        result[descKey] = desc;
+      }
+    };
+    
+    // Temel bilgiler (text alanlar, value set değil)
+    addIfNotEmpty('TemaName', getAttrValue('Tema_Ismi'));  // Text alan
+    addIfNotEmpty('TemaKod', getAttrValue('Tema_Kodu'));   // Text alan
+    
+    const themeId = getAttrValue('ThemeId');
+    if (themeId) {
+      const parsedThemeId = parseInt(themeId);
+      if (!isNaN(parsedThemeId) && parsedThemeId !== 0) {
+        result.TemaId = parsedThemeId;
+      }
+    }
+    
+    // InStore tarihi (doğru alan adı: InStore_Tarihi)
+    addIfNotEmpty('InStoreDate', formatInStoreDate(getAttrValue('InStore_Tarihi')));
+    
+    // Cluster (kod-desc çifti)
+    addCodeDescPair('Cluster', 'ClusterDesc', 'Cluster');
+    
+    // LifeStyle (kod-desc çifti)
+    addCodeDescPair('LifeStyle', 'LifeStyleDesc', 'LifeStyle');
+    
+    // Hibrit (kod-desc çifti)
+    addCodeDescPair('Hibrit', 'HibritDesc', 'Hibrit');
+    
+    // Tema Kısa Kod (kod-desc çifti)
+    addCodeDescPair('TemaKisaKod', 'TemaKisaKodDesc', 'Tema_Kisa_Kod');
+    
+    // Sezon (TERS BAĞLANMIŞ - Kod ve Desc yer değiştirmiş)
+    const sezonCode = getAttrValue('Sezon');
+    const sezonDesc = getAttrDescription('Sezon');
+    // Eğer description varsa (bu kod olarak gidecek), ikisini de ekle
+    if (sezonDesc !== null && sezonDesc !== undefined && sezonDesc !== '') {
+      result.Sezon = sezonDesc; // Description kod olarak
+      if (sezonCode !== null && sezonCode !== undefined && sezonCode !== '' && sezonCode !== 0) {
+        result.SezonDesc = sezonCode; // Value desc olarak
+      }
+    }
+    
+    // Ana Tema (kod-desc çifti)
+    addCodeDescPair('AnaTemaKod', 'AnaTemaKodDesc', 'Ana_Tema');
+    
+    // Ürün Sınıfı (kod-desc çifti)
+    addCodeDescPair('UrunSinifi', 'UrunSinifiDesc', 'Urun_Sinifi');
+    
+    // Alt Sezon (kod-desc çifti)
+    addCodeDescPair('AltSezon', 'AltSezonDesc', 'Alt_Sezon');
+    
+    // Marka (kod-desc çifti)
+    addCodeDescPair('Marka', 'MarkaDesc', 'Marka');
+    
+    // Koleksiyon (kod-desc çifti)
+    addCodeDescPair('Koleksiyon', 'KoleksiyonDesc', 'Koleksiyon');
+    
+    // Koleksiyon Tipi (kod-desc çifti)
+    addCodeDescPair('KoleksiyonTipi', 'KoleksiyonTipiDesc', 'Koleksiyon_Tipi');
+    
+    return result;
+  }
 }
 
 // Create singleton instance

@@ -298,6 +298,53 @@ router.post('/style/update', async (req, res) => {
 });
 
 /**
+ * POST /api/theme-attributes
+ * PID ile tema özelliklerini özel formatta çeker
+ * Body: { "pidDocId": "Theme_Attributes-6-0-LATEST" }
+ */
+router.post('/theme-attributes', async (req, res) => {
+  try {
+    const { pidDocId } = req.body;
+    
+    // Validation
+    if (!pidDocId) {
+      return res.status(400).json({
+        success: false,
+        error: 'pidDocId is required',
+        message: 'Please provide pidDocId in request body (e.g., "Theme_Attributes-6-0-LATEST")'
+      });
+    }
+    
+    if (typeof pidDocId !== 'string' || !pidDocId.trim()) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid pidDocId',
+        message: 'pidDocId must be a non-empty string'
+      });
+    }
+    
+    console.log(`\n📥 Incoming request for theme-attributes: ${pidDocId}`);
+    
+    // Fetch theme attributes from IDM in formatted structure
+    const formattedData = await idmService.getThemeAttributesFormatted(pidDocId);
+    
+    console.log(`✅ Theme attributes formatted successfully\n`);
+    
+    res.json(formattedData);
+    
+  } catch (error) {
+    console.error('❌ Error processing theme-attributes request:', error.message);
+    
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error',
+      message: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+/**
  * GET /api/theme/health
  * Health check for theme service
  */
