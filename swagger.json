@@ -76,6 +76,14 @@
                         "updateTheme": {
                           "type": "string",
                           "example": "POST /api/theme/update (Body: { \"ThemeId\": 1174 })"
+                        },
+                        "getThemeAttributesFormatted": {
+                          "type": "string",
+                          "example": "POST /api/theme-attributes (Body: { \"pidDocId\": \"Theme_Attributes-119-1-LATEST\" })"
+                        },
+                        "updateStyle": {
+                          "type": "string",
+                          "example": "POST /api/style/update (Body: { \"StyleId\": 11699 })"
                         }
                       }
                     },
@@ -314,6 +322,55 @@
           },
           "404": {
             "description": "Style bulunamadı",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Sunucu hatası",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/theme-attributes": {
+      "post": {
+        "tags": ["Theme"],
+        "summary": "Tema Özellikleri (Özel Format - ERP)",
+        "description": "PID (pidDocId) ile IDM'den tema özelliklerini çeker ve ERP için özel formatta döner. Kod-açıklama eşleştirmesi yapar, tarih formatını değiştirir ve boş alanları filtreleyerek sadece dolu değerleri döner.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemeAttributesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tema özellikleri başarıyla alındı",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeAttributesFormattedResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Geçersiz istek",
             "content": {
               "application/json": {
                 "schema": {
@@ -822,6 +879,176 @@
           "timestamp": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "ThemeAttributesRequest": {
+        "type": "object",
+        "required": ["pidDocId"],
+        "properties": {
+          "pidDocId": {
+            "type": "string",
+            "description": "IDM Item PID (Theme_Attributes)",
+            "example": "Theme_Attributes-119-1-LATEST"
+          }
+        }
+      },
+      "ThemeAttributesFormattedResponse": {
+        "type": "object",
+        "properties": {
+          "BatchId": {
+            "type": "string",
+            "example": "Theme_Attributes-119-1-LATEST_1772011234567",
+            "description": "Unique batch identifier (PID + timestamp)"
+          },
+          "ProcessedDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-02-25T09:30:00.000Z",
+            "description": "İşlem tarihi (ISO 8601)"
+          },
+          "ThemeData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormattedThemeData"
+            },
+            "description": "Tema verileri (array olarak döner, tek item)"
+          }
+        }
+      },
+      "FormattedThemeData": {
+        "type": "object",
+        "description": "Özel formatlı tema verisi (sadece dolu alanlar döner)",
+        "properties": {
+          "TemaName": {
+            "type": "string",
+            "example": "FW 26/27_IPK_G_CO_AYK_5",
+            "description": "Tema İsmi"
+          },
+          "TemaKod": {
+            "type": "string",
+            "example": "6803",
+            "description": "Tema Kodu"
+          },
+          "TemaId": {
+            "type": "integer",
+            "example": 1174,
+            "description": "PLM Theme ID"
+          },
+          "InStoreDate": {
+            "type": "string",
+            "example": "01.01.1900",
+            "description": "InStore tarihi (DD.MM.YYYY formatı)"
+          },
+          "Cluster": {
+            "type": "string",
+            "example": "018",
+            "description": "Cluster kodu"
+          },
+          "ClusterDesc": {
+            "type": "string",
+            "example": "Koleksiyon - G",
+            "description": "Cluster açıklaması"
+          },
+          "LifeStyle": {
+            "type": "string",
+            "example": "011",
+            "description": "LifeStyle kodu"
+          },
+          "LifeStyleDesc": {
+            "type": "string",
+            "example": "SMART",
+            "description": "LifeStyle açıklaması"
+          },
+          "Hibrit": {
+            "type": "string",
+            "example": "002",
+            "description": "Hibrit kodu"
+          },
+          "HibritDesc": {
+            "type": "string",
+            "example": "PLAN",
+            "description": "Hibrit açıklaması"
+          },
+          "TemaKisaKod": {
+            "type": "string",
+            "example": "1640",
+            "description": "Tema Kısa Kod"
+          },
+          "TemaKisaKodDesc": {
+            "type": "string",
+            "example": "ACTIVEWEAR",
+            "description": "Tema Kısa Kod açıklaması"
+          },
+          "Sezon": {
+            "type": "string",
+            "example": "FW 26/27",
+            "description": "Sezon (NOT: Kod ve Desc ters bağlanmış, bu description value'su)"
+          },
+          "SezonDesc": {
+            "type": "string",
+            "example": "2026-27 KIS",
+            "description": "Sezon açıklaması (NOT: Kod ve Desc ters bağlanmış, bu code value'su)"
+          },
+          "AnaTemaKod": {
+            "type": "string",
+            "example": "038",
+            "description": "Ana Tema kodu"
+          },
+          "AnaTemaKodDesc": {
+            "type": "string",
+            "example": "BCT 1",
+            "description": "Ana Tema açıklaması"
+          },
+          "UrunSinifi": {
+            "type": "string",
+            "example": "001",
+            "description": "Ürün Sınıfı kodu"
+          },
+          "UrunSinifiDesc": {
+            "type": "string",
+            "example": "NORMAL",
+            "description": "Ürün Sınıfı açıklaması"
+          },
+          "AltSezon": {
+            "type": "string",
+            "example": "FW1",
+            "description": "Alt Sezon kodu"
+          },
+          "AltSezonDesc": {
+            "type": "string",
+            "example": "FW1",
+            "description": "Alt Sezon açıklaması"
+          },
+          "Marka": {
+            "type": "string",
+            "example": "001",
+            "description": "Marka kodu"
+          },
+          "MarkaDesc": {
+            "type": "string",
+            "example": "Ipekyol",
+            "description": "Marka açıklaması"
+          },
+          "Koleksiyon": {
+            "type": "string",
+            "example": "001",
+            "description": "Koleksiyon kodu"
+          },
+          "KoleksiyonDesc": {
+            "type": "string",
+            "example": "Koleksiyon Açıklaması",
+            "description": "Koleksiyon açıklaması"
+          },
+          "KoleksiyonTipi": {
+            "type": "string",
+            "example": "001",
+            "description": "Koleksiyon Tipi kodu"
+          },
+          "KoleksiyonTipiDesc": {
+            "type": "string",
+            "example": "Ana Koleksiyon",
+            "description": "Koleksiyon Tipi açıklaması"
           }
         }
       },
